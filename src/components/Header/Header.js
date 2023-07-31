@@ -3,7 +3,7 @@ import { Container, Navbar, Nav, NavDropdown, Form, Button, FormControl } from '
 function Header () {
   return (
     <>
-      
+      <Button variant="primary">Primary</Button>{' '}
     </>
       //   <Navbar expand="lg" className="bg-body-tertiary">
       //   <Container>
