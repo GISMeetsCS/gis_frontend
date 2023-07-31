@@ -1,11 +1,12 @@
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import GoogleMap from '../GoogleMap/GoogleMap';
 
 function Main () {
     return (
     <>
         <Header />
-        children
+        <GoogleMap />
         <Footer />
     </>
     );
