@@ -27,7 +27,7 @@ function Recovery() {
             <input class="form-control me-2" type="search" placeholder="Nick-name" aria-label="Nickname" />
             <input class="form-control me-2" type="search" placeholder="Name" aria-label="Name" />
             <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
+        </form>
       </Tab>
     </Tabs>
   );
