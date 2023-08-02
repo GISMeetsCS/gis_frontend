@@ -16,12 +16,11 @@ function Header () {
             navbarScroll
           >
             <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link href="#action2">MyPage</Nav.Link>
             <Nav.Link href="#">Ranking</Nav.Link>
             <NavDropdown title="User" id="navbarScrollingDropdown">
-              <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
+              <NavDropdown.Item href="#action3">My Page</NavDropdown.Item>
               <NavDropdown.Item href="#action4">
-                Another action
+                Modify User Info
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action5">

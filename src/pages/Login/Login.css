@@ -1,0 +1,8 @@
+.Login-box {
+    font-weight: bold;
+    display: flex;
+    height: 90%;
+    flex-direction: column;
+    padding: 10%;
+    align-items: center;
+}
