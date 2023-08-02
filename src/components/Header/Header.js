@@ -17,18 +17,23 @@ function Header () {
           >
             <Nav.Link href="#action1">Home</Nav.Link>
             <Nav.Link href="#">Ranking</Nav.Link>
-            <NavDropdown title="User" id="navbarScrollingDropdown">
-              <NavDropdown.Item href="#action3">My Page</NavDropdown.Item>
-              <NavDropdown.Item href="#action4">
-                Modify User Info
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action5">
-                Something else here
-              </NavDropdown.Item>
-            </NavDropdown>
+            <div className='Header-user'>
+              <div className='Header-user-box'>
+                <img className='Header-profile' src="https://avatars.githubusercontent.com/u/24736765?v=4" alt="" size="32" height="32" width="32" data-view-component="true" class="avatar circle"></img>
+              </div>
+              <NavDropdown title="Nayeon Kim" id="navbarScrollingDropdown">
+                <NavDropdown.Item href="#action3">My Page</NavDropdown.Item>
+                <NavDropdown.Item href="#action4">
+                  Modify User Info
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="#action5">
+                  Something else here
+                </NavDropdown.Item>
+              </NavDropdown>
+            </div>
           </Nav>
-          <Form className="d-flex">
+          {/* <Form className="d-flex">
             <Form.Control
               type="search"
               placeholder="Search"
@@ -36,7 +41,7 @@ function Header () {
               aria-label="Search"
             />
             <Button variant="outline-success">Search</Button>
-          </Form>
+          </Form> */}
         </Navbar.Collapse>
       </Container>
     </Navbar>
