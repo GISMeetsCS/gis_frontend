@@ -1,0 +1,9 @@
+.GoogleMap-box {
+    width: 100%;
+    height: 100vh;
+}
+
+.GoogleMap-map {
+    width: 75% !important;
+    height: 100% !important;
+}

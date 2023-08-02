@@ -1,0 +1,14 @@
+.Main-box {
+  display: flex;
+  width: 100%;
+}
+
+.Main-main {
+  width: 25%;
+  float: left;
+}
+
+.Main-map {
+  width: 75%;
+  float: right;
+  }

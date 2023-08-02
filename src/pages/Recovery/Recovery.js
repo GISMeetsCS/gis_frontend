@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { Tab, Tabs } from 'react-bootstrap';
+import { Tab, Tabs, Button } from 'react-bootstrap';
 
 function Recovery() {
   const [key, setKey] = useState('home');
@@ -26,7 +26,7 @@ function Recovery() {
             <input class="form-control me-2" type="search" placeholder="Email" aria-label="Email" />
             <input class="form-control me-2" type="search" placeholder="Nick-name" aria-label="Nickname" />
             <input class="form-control me-2" type="search" placeholder="Name" aria-label="Name" />
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <Button as="input" type="submit" value="Submit" />
         </form>
       </Tab>
     </Tabs>
