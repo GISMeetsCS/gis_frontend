@@ -8,9 +8,9 @@ function Main () {
         <div className='Main-box'>
             <div className="Main-main">
                 <form>
-                    <input class="form-control me-2" type="search" placeholder="userid" aria-label="userid" />
-                    <input class="form-control me-2" type="search" placeholder="pw" aria-label="pw" />
-                    <Button as="input" type="submit" value="Login" />
+                    <input class="form-control me-2" type="search" placeholder="latitude" aria-label="latitude" />
+                    <input class="form-control me-2" type="search" placeholder="longitude" aria-label="longitude" />
+                    <Button as="input" type="submit" value="Upload" />
                 </form>
             </div>
             <div className="Main-map">

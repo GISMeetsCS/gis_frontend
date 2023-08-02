@@ -11,17 +11,19 @@ import { Routes, Route, BrowserRouter, useNavigate } from "react-router-dom";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/main" element={<Main />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/ranking" element={<Ranking />} />
-        <Route path="/recovery" element={<Recovery />} />
-        <Route path="/signup" element={<SignUp />} />
-      </Routes>
-    </BrowserRouter>
+    <div className='App-box'>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/main" element={<Main />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/ranking" element={<Ranking />} />
+          <Route path="/recovery" element={<Recovery />} />
+          <Route path="/signup" element={<SignUp />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
