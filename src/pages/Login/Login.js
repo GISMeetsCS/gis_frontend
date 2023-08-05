@@ -19,7 +19,6 @@ function Login () {
     return (
         <div className='Login-container'>
             <div className='Login-header'>
-                <img src='../../asset/images/logo.png' alt='' onClick={goToMain}/>
                 Sign in to GISMeetsCS
             </div>
             <div className='Login-small-box'>
