@@ -1,38 +1,36 @@
 .Login-container {
-    font-weight: bold;
+    padding-top: 150px;
     display: flex;
-    height: 90%;
     flex-direction: column;
-    padding: 10%;
     align-items: center;
-}
-.Login-header {
-    font-size: 24px;
     font-weight: var(--base-text-weight-light, 300);
     letter-spacing: -0.5px;
 }
 
-.Login-header img {
-    width: 100px;
-    height: 100px;
+.Login-header {
+    font-size: 24px;
 }
 
 .Login-small-box {
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    margin: 10px;
+    padding: 5px;
     border-radius: 3%;
     width: 308px;
-    height: 220px;
+    height: 230px;
+    border: 1px solid rgba(255, 255, 255, 0.336);
 }
 
-.Login-small-box input {
+.Login-small-box * {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    width: 70% !important;
     margin: 0 auto;
-    width: 70%;
-    margin-top: 10px;
-    margin-bottom: 16px;
+}
+
+.Login-small-box a {
+    float: right !important;
 }
 
 .Login-bottom-links {
     font-size: 15px;
-    font-weight: var(--base-text-weight-light, 300);
-    letter-spacing: -0.5px;
 }

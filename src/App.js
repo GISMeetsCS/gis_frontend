@@ -1,3 +1,4 @@
+import './asset/css/global_style.css';
 import './App.css';
 import React from 'react';
 import Login from './pages/Login/Login';

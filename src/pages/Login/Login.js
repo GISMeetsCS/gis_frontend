@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../asset/css/global_style.css';
 import './Login.css';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
@@ -22,13 +21,10 @@ function Login () {
                 Sign in to GISMeetsCS
             </div>
             <div className='Login-small-box'>
-                <form>
-                    <a href='' onClick={goToRecovery}>Forgot login info?</a>
-                    <input class="form-control me-2" type="text" placeholder="Username or Email" aria-label="userid" />
-                    <input class="form-control me-2" type="text" placeholder="Password" aria-label="pw" />
-                    <input class="form-control me-2" type="submit" />
-                    {/* <Button as="input" value="Login" onClick={goToMain} /> */}
-                </form>
+                <a href='' onClick={goToRecovery}>Forgot login info?</a>
+                <input class="form-control" type="text" placeholder="Username or Email" aria-label="userid" />
+                <input class="form-control" type="text" placeholder="Password" aria-label="pw" />
+                <Button as="input" value="Login" onClick={goToMain} />
             </div>
             <div className='Login-bottom-links'>
                 <p>
