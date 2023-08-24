@@ -11,7 +11,6 @@ CREATE TABLE public.global_info (
 	total_green_quality float4 NULL
 );
 
-
 -- public."user" definition
 
 -- Drop table
@@ -19,39 +18,17 @@ CREATE TABLE public.global_info (
 -- DROP TABLE public."user";
 
 CREATE TABLE public."user" (
-	user_id bigserial NOT NULL,
+	user_id serial4 NOT NULL,
 	email varchar(50) NULL,
 	user_name varchar(50) NULL,
-	nick_name varchar(30) NULL,
+	nickname varchar(30) NULL,
 	"password" varchar(50) NULL,
-	status int2 NULL,
+	status int4 NULL,
 	jwt_token varchar(100) NULL,
 	num_upload int4 NULL,
 	num_issue int4 NULL,
 	CONSTRAINT user_pkey PRIMARY KEY (user_id)
 );
-
-
--- public.issue definition
-
--- Drop table
-
--- DROP TABLE public.issue;
-
-CREATE TABLE public.issue (
-	issue_id bigserial NOT NULL,
-	user_id bigserial NOT NULL,
-	subject varchar(100) NULL,
-	description text NULL,
-	photo bytea NULL,
-	status int2 NULL,
-	latitude float4 NULL,
-	longitude float4 NULL,
-	extra_score int4 NULL,
-	CONSTRAINT issue_pkey PRIMARY KEY (issue_id),
-	CONSTRAINT issue_fk FOREIGN KEY (user_id) REFERENCES public."user"(user_id)
-);
-
 
 -- public.photo definition
 
@@ -60,20 +37,23 @@ CREATE TABLE public.issue (
 -- DROP TABLE public.photo;
 
 CREATE TABLE public.photo (
-	photo_id bigserial NOT NULL,
-	latitude float4 NULL,
-	longitute float4 NULL,
-	user_id bigserial NOT NULL,
-	green_area int4 NULL,
-	num_trees int4 NULL,
-	virtical_diversity int4 NULL,
-	original_file bytea NULL,
-	entity_file bytea NULL,
-	upload_time timestamp NULL,
-	CONSTRAINT photo_pkey PRIMARY KEY (photo_id),
-	CONSTRAINT photo_fk FOREIGN KEY (user_id) REFERENCES public."user"(user_id)
+	photo_id int8 NOT NULL,
+	entity_file int2 NOT NULL,
+	green_area int4 NOT NULL,
+	latitude float8 NOT NULL,
+	longitude float8 NOT NULL,
+	num_trees int4 NOT NULL,
+	original_file int2 NOT NULL,
+	upload_time bytea NULL,
+	user_id int4 NOT NULL,
+	vertical_diversity int4 NOT NULL,
+	CONSTRAINT photo_pkey PRIMARY KEY (photo_id)
 );
 
+
+-- public.photo foreign keys
+
+ALTER TABLE public.photo ADD CONSTRAINT photo_fk FOREIGN KEY (user_id) REFERENCES public."user"(user_id);
 
 -- public.photo_entity definition
 
@@ -82,9 +62,33 @@ CREATE TABLE public.photo (
 -- DROP TABLE public.photo_entity;
 
 CREATE TABLE public.photo_entity (
-	photo_id bigserial NOT NULL,
-	pixel_x int4 NULL,
-	pixel_y int4 NULL,
-	"type" int2 NULL,
-	CONSTRAINT photo_entity_fk FOREIGN KEY (photo_id) REFERENCES public.photo(photo_id) ON DELETE CASCADE
+	photo_id int8 NOT NULL,
+	pixel_x int4 NOT NULL,
+	pixel_y int4 NOT NULL,
+	"type" int4 NOT NULL,
+	CONSTRAINT photo_entity_pkey PRIMARY KEY (photo_id)
 );
+
+-- public.issue definition
+
+-- Drop table
+
+-- DROP TABLE public.issue;
+
+CREATE TABLE public.issue (
+	issue_id int4 NOT NULL,
+	description oid NULL,
+	extra_score int4 NOT NULL,
+	latitude float8 NOT NULL,
+	longitude float8 NOT NULL,
+	photo int2 NOT NULL,
+	status int4 NOT NULL,
+	subject varchar(255) NULL,
+	user_id int4 NOT NULL,
+	CONSTRAINT issue_pkey PRIMARY KEY (issue_id)
+);
+
+
+-- public.issue foreign keys
+
+ALTER TABLE public.issue ADD CONSTRAINT issue_fk FOREIGN KEY (user_id) REFERENCES public."user"(user_id);
