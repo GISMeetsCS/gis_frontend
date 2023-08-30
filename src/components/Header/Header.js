@@ -1,8 +1,16 @@
 import React from 'react';
 import './Header.css';
+import { useNavigate } from "react-router-dom";
 import { Container, Navbar, Nav, NavDropdown, Form, Button } from 'react-bootstrap';
 
 function Header () {
+
+  const navigate = useNavigate();
+  
+  const goToMyPage = () => {
+    navigate("/mypage");
+  };
+
   return (
     <div className='Header-box'>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -22,7 +30,7 @@ function Header () {
                 <img className='Header-profile' src="https://avatars.githubusercontent.com/u/24736765?v=4" alt="" size="32" height="32" width="32" data-view-component="true" class="avatar circle"></img>
               </div>
               <NavDropdown title="Nayeon Kim" id="navbarScrollingDropdown">
-                <NavDropdown.Item href="#action3">My Page</NavDropdown.Item>
+                <NavDropdown.Item href="#action3" onClick={goToMyPage}>My Page</NavDropdown.Item>
                 <NavDropdown.Item href="#action4">
                   Modify User Info
                 </NavDropdown.Item>

@@ -5,12 +5,15 @@ import { useNavigate } from "react-router-dom";
 
 function Login () {
     const navigate = useNavigate();
+
     const goToMain = () => {
         navigate("/main");
     };
+
     const goToSignUp = () => {
         navigate("/signup");
     };
+    
     const goToRecovery = () => {
         navigate("/recovery");
     };
