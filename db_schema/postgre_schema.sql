@@ -11,23 +11,23 @@ CREATE TABLE public.global_info (
 	total_green_quality float4 NULL
 );
 
--- public."user" definition
+-- public."member" definition
 
 -- Drop table
 
--- DROP TABLE public."user";
+-- DROP TABLE public."member";
 
-CREATE TABLE public."user" (
-	user_id serial4 NOT NULL,
+CREATE TABLE public."member" (
+	member_id int4 NOT NULL DEFAULT nextval('user_user_id_seq'::regclass),
 	email varchar(50) NULL,
-	user_name varchar(50) NULL,
+	member_name varchar(50) NULL,
 	nickname varchar(30) NULL,
 	"password" varchar(50) NULL,
 	status int4 NULL,
 	jwt_token varchar(100) NULL,
 	num_upload int4 NULL,
 	num_issue int4 NULL,
-	CONSTRAINT user_pkey PRIMARY KEY (user_id)
+	CONSTRAINT user_pkey PRIMARY KEY (member_id)
 );
 
 -- public.photo definition
@@ -53,7 +53,7 @@ CREATE TABLE public.photo (
 
 -- public.photo foreign keys
 
-ALTER TABLE public.photo ADD CONSTRAINT photo_fk FOREIGN KEY (user_id) REFERENCES public."user"(user_id);
+ALTER TABLE public.photo ADD CONSTRAINT photo_fk FOREIGN KEY (user_id) REFERENCES public."member"(member_id);
 
 -- public.photo_entity definition
 
@@ -91,4 +91,4 @@ CREATE TABLE public.issue (
 
 -- public.issue foreign keys
 
-ALTER TABLE public.issue ADD CONSTRAINT issue_fk FOREIGN KEY (user_id) REFERENCES public."user"(user_id);
+ALTER TABLE public.issue ADD CONSTRAINT issue_fk FOREIGN KEY (user_id) REFERENCES public."member"(member_id);
