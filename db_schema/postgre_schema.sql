@@ -1,9 +1,3 @@
--- public.global_info definition
-
--- Drop table
-
--- DROP TABLE public.global_info;
-
 CREATE TABLE public.global_info (
 	radius int4 NULL,
 	total_trees int4 NULL,
@@ -11,14 +5,8 @@ CREATE TABLE public.global_info (
 	total_green_quality float4 NULL
 );
 
--- public."member" definition
-
--- Drop table
-
--- DROP TABLE public."member";
-
 CREATE TABLE public."member" (
-	member_id int4 NOT NULL DEFAULT nextval('user_user_id_seq'::regclass),
+	member_id SERIAL NOT NULL,
 	email varchar(50) NULL,
 	member_name varchar(50) NULL,
 	nickname varchar(30) NULL,
@@ -30,65 +18,40 @@ CREATE TABLE public."member" (
 	CONSTRAINT user_pkey PRIMARY KEY (member_id)
 );
 
--- public.photo definition
-
--- Drop table
-
--- DROP TABLE public.photo;
-
 CREATE TABLE public.photo (
-	photo_id int8 NOT NULL,
-	entity_file int2 NOT NULL,
+	photo_id SERIAL NOT NULL,
 	green_area int4 NOT NULL,
 	latitude float8 NOT NULL,
 	longitude float8 NOT NULL,
 	num_trees int4 NOT NULL,
-	original_file int2 NOT NULL,
-	upload_time bytea NULL,
-	user_id int4 NOT NULL,
+	original_file bytea NOT NULL,
+	upload_time timestamp NULL,
+	member_id int4 NOT NULL,
 	vertical_diversity int4 NOT NULL,
 	CONSTRAINT photo_pkey PRIMARY KEY (photo_id)
 );
 
-
--- public.photo foreign keys
-
-ALTER TABLE public.photo ADD CONSTRAINT photo_fk FOREIGN KEY (user_id) REFERENCES public."member"(member_id);
-
--- public.photo_entity definition
-
--- Drop table
-
--- DROP TABLE public.photo_entity;
-
 CREATE TABLE public.photo_entity (
-	photo_id int8 NOT NULL,
+	photo_id SERIAL NOT NULL,
+	entity_file bytea NOT NULL,
 	pixel_x int4 NOT NULL,
 	pixel_y int4 NOT NULL,
 	"type" int4 NOT NULL,
 	CONSTRAINT photo_entity_pkey PRIMARY KEY (photo_id)
 );
 
--- public.issue definition
-
--- Drop table
-
--- DROP TABLE public.issue;
-
 CREATE TABLE public.issue (
-	issue_id int4 NOT NULL,
+	issue_id SERIAL NOT NULL,
 	description oid NULL,
 	extra_score int4 NOT NULL,
 	latitude float8 NOT NULL,
 	longitude float8 NOT NULL,
-	photo int2 NOT NULL,
+	photo bytea NOT NULL,
 	status int4 NOT NULL,
 	subject varchar(255) NULL,
-	user_id int4 NOT NULL,
+	member_id int4 NOT NULL,
 	CONSTRAINT issue_pkey PRIMARY KEY (issue_id)
 );
 
-
--- public.issue foreign keys
-
-ALTER TABLE public.issue ADD CONSTRAINT issue_fk FOREIGN KEY (user_id) REFERENCES public."member"(member_id);
+ALTER TABLE public.photo ADD CONSTRAINT photo_fk FOREIGN KEY (member_id) REFERENCES public."member"(member_id);
+ALTER TABLE public.issue ADD CONSTRAINT issue_fk FOREIGN KEY (member_id) REFERENCES public."member"(member_id);
