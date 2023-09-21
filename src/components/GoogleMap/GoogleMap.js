@@ -6,6 +6,7 @@ import { GOOGLEMAP_KEY } from '../../config';
 function GoogleMap (props) {
 
   const [myLatlng, setMyLatlng] = useState({ lat: 32.98587736174567, lng: -96.7502581329881 });
+  const [clickLatLng, setClickLatLng] = useState({ lat: 32.98587736174567, lng: -96.7502581329881 });
   const [infoState, setInfoState] = useState({
     showingInfoWindow: false,
     activeMarker: {},
@@ -29,25 +30,21 @@ function GoogleMap (props) {
     console.log("get lat lng error");
   }
 
-  const onMapClick = () => {
-    getLatLng();
-    setInfoState.showingInfoWindow(true);
+  const onMapClick = (mapProps, map, clickEvent) => {
+    setClickLatLng({lat: clickEvent.latLng.lat(), lng: clickEvent.latLng.lng()})
+    console.log(`클릭한 위치의 위도: ${clickLatLng.lat}, 경도: ${clickLatLng.lng}`);
+    setInfoState({selectedPlace: clickLatLng, showingInfoWindow: true});
+  };
+
+  const onCloseInfoWindow = () => {
     if (infoState.showingInfoWindow) {
       setInfoState({
         showingInfoWindow: false,
-        activeMarker: null
-      })
+        activeMarker: null,
+      });
     }
   };
 
-  const onMarkerClick = (props, marker, e) => {
-    setInfoState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
-    })
-  };
-    
     return (
       <div className='GoogleMap-box'>
         <Map className='GoogleMap-map'
@@ -56,14 +53,19 @@ function GoogleMap (props) {
           initialCenter={myLatlng}
           onClick={onMapClick}
         >
-          <Marker position={myLatlng}
-            onClick={onMarkerClick}
-            />
+
+          {infoState.selectedPlace && (
+            <Marker position={infoState.selectedPlace} onClick={onCloseInfoWindow} />
+          )}
+            
           <InfoWindow
             marker={infoState.activeMarker}
-            visible={infoState.showingInfoWindow}>
+            visible={infoState.showingInfoWindow}
+            onClose={onCloseInfoWindow}>
               <div>
                 <h1>잘되게해주세요</h1>
+                <p>위도: {clickLatLng.lat}</p>
+                <p>경도: {clickLatLng.lng}</p>
               </div>
         </InfoWindow>
         </Map>

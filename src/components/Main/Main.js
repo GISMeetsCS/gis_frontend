@@ -48,13 +48,13 @@ function Main () {
 
     const uploadPhoto = () => {
         const file = new FormData();
-        file.append('file', binaryPhoto);
-        // file.append('latitude', lat);
-        // file.append('longitude', longitude);
+        file.append("file", binaryPhoto);
+        file.append('lat', lat);
+        file.append('lon', longitude);
+        file.append('memberId', 1);
     
         axios.post('http://localhost:8080/photos', file, {
             headers: {
-                'Authorization': 'jwt',
                 'Content-Type': 'multipart/form-data'
             }
         })
@@ -73,7 +73,9 @@ function Main () {
     }
 
     const mainImgInput_onChange = (e) => {
-        setBinaryPhoto(e.target.value)
+        setBinaryPhoto(e.target.files[0])
+        console.log("heyhey")
+        console.log(binaryPhoto)
     }
 
     const [lat, setLat] = useState('');
