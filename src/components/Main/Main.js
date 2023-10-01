@@ -1,10 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Main.css';
 import GoogleMap from '../GoogleMap/GoogleMap';
 import { Button } from 'react-bootstrap';
 
 function Main () {
+    // ({ lat: 32.98587736174567, lng: -96.7502581329881 });
+    const [currentLatlng, setCurrentLatlng] = useState({ lat: 32.98587736174567, lng: -96.7502581329881 });
+    
+    useEffect(() => {
+        getLatLng();
+        console.log("이펙트 lat" + currentLatlng.lat);
+    }, currentLatlng);
+
+    const getLatLng = (params) => {
+        window.navigator.geolocation.getCurrentPosition(success, error);
+        console.log("getLatLng");
+    }
+
+    const success = (position) => {
+        setCurrentLatlng({lat: position.coords.latitude, lng: position.coords.longitude});
+        setLat(currentLatlng.lat);
+        setLng(currentLatlng.lng);
+        console.log("success");
+    }
+    
+    const error = (err) => {
+        console.log("get lat lng error");
+    }
+
    const getQuoteById = () => {
         var temp = axios.get('https://localhost:8080/photo')
             .then((response) => {
@@ -50,7 +74,7 @@ function Main () {
         const file = new FormData();
         file.append("file", binaryPhoto);
         file.append('lat', lat);
-        file.append('lon', longitude);
+        file.append('lon', lng);
         file.append('memberId', 1);
     
         axios.post('http://localhost:8080/photos', file, {
@@ -79,7 +103,7 @@ function Main () {
     }
 
     const [lat, setLat] = useState('');
-    const [longitude, setLongitude] = useState('');
+    const [lng, setLng] = useState('');
     const [binaryPhoto, setBinaryPhoto] = useState('');
 
     const latOnChange = (e) => {
@@ -87,14 +111,19 @@ function Main () {
     }
 
     const longOnChange = (e) => {
-        setLongitude(e.target.value)
+        setLng(e.target.value)
     }
 
     return (
         <div className='Main-box'>
             <div className="Main-main">
-                <input class="form-control" type="search" placeholder="latitude" aria-label="latitude" value={lat} onChange={latOnChange} />
-                <input class="form-control" type="search" placeholder="longitude" aria-label="longitude" value={longitude} onChange={longOnChange} />
+                <label>Latitude: 
+                    <input class="form-control" type="number" aria-label="latitude" value={lat} onChange={latOnChange} />
+                </label>
+                <br/>
+                <label>Longitude: 
+                    <input class="form-control" type="number" aria-label="longitude" value={lng} onChange={longOnChange} />
+                </label>
                 <input accept="image/*" type="file" onChange={mainImgInput_onChange} />
                 <Button onClick={uploadPhoto}>Upload</Button>
             </div>
