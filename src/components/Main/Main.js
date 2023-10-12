@@ -6,23 +6,27 @@ import { Button } from 'react-bootstrap';
 
 function Main () {
     // ({ lat: 32.98587736174567, lng: -96.7502581329881 });
-    const [currentLatlng, setCurrentLatlng] = useState({ lat: 32.98587736174567, lng: -96.7502581329881 });
+    const [currentLatlng, setCurrentLatlng] = useState({ lat: 0, lng: 0 });
     
     useEffect(() => {
-        getLatLng();
-        console.log("이펙트 lat" + currentLatlng.lat);
-    }, currentLatlng);
+        if(currentLatlng.lat == 0 && currentLatlng.lng == 0)
+            getLatLng();
+    }, []);
+
+    useEffect(() => {
+        if(currentLatlng.lat != 0 && currentLatlng.lng != 0){
+            setLat(currentLatlng.lat);
+            setLng(currentLatlng.lng);
+        }
+    }, [currentLatlng]);
 
     const getLatLng = (params) => {
-        window.navigator.geolocation.getCurrentPosition(success, error);
+        navigator.geolocation.getCurrentPosition(success, error);
         console.log("getLatLng");
     }
 
     const success = (position) => {
         setCurrentLatlng({lat: position.coords.latitude, lng: position.coords.longitude});
-        setLat(currentLatlng.lat);
-        setLng(currentLatlng.lng);
-        console.log("success");
     }
     
     const error = (err) => {

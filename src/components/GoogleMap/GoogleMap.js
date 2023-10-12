@@ -7,29 +7,30 @@ import axios from 'axios';
 function GoogleMap (props) {
 
   const [myLatlng, setMyLatlng] = useState({ lat: 32.98587736174567, lng: -96.7502581329881 });
-  const [clickLatLng, setClickLatLng] = useState({ lat: 32.98587736174567, lng: -96.7502581329881 });
+  const [clickLatLng, setClickLatLng] = useState({ lat: 0, lng: 0 });
   const [infoState, setInfoState] = useState({
     showingInfoWindow: false,
     activeMarker: {},
     selectedPlace: {},
   });
+  
   const [locInfo, setLocInfo] = useState({
     photoId: '',
-    greenArea: 2,
-    numTrees: 3,
-    verticalDiversity: 4,
-    photoEntity: 5
+    greenArea: '',
+    numTrees: '',
+    verticalDiversity: '',
+    photoEntity: ''
   });
 
   useEffect(() => {
-    
-  }, []);
+    if(clickLatLng.lat != 0 && clickLatLng.lng != 0){
+      setInfoState({selectedPlace: clickLatLng, showingInfoWindow: true});
+      getLocInfo();
+    }
+  }, [clickLatLng]);
 
   const onMapClick = (mapProps, map, clickEvent) => {
     setClickLatLng({lat: clickEvent.latLng.lat(), lng: clickEvent.latLng.lng()})
-    console.log(`클릭한 위치의 위도: ${clickLatLng.lat}, 경도: ${clickLatLng.lng}`);
-    setInfoState({selectedPlace: clickLatLng, showingInfoWindow: true});
-    getLocInfo();
   };
 
   const onCloseInfoWindow = () => {
@@ -64,19 +65,6 @@ function GoogleMap (props) {
         .catch((error) => {
             console.error('API Request Error:', error);
         });
-}
-
-  const getEntityImg = () => {
-    var temp = axios.get(`http://localhost:8081/photos/${locInfo.photoId}`)
-        .then((response) => {
-            setLocInfo({
-              photoEntity: response.data
-            });
-            return response.data;
-        })
-        .catch((error) => {
-            console.error('API Request Error:', error);
-        });
   }
 
     return (
@@ -86,8 +74,6 @@ function GoogleMap (props) {
           zoom={14}
           initialCenter={myLatlng}
           onClick={onMapClick} >
-
-        <Marker position={infoState.selectedPlace} onClick={onMarkerClick} />
             
         <InfoWindow
           marker={infoState.activeMarker}
