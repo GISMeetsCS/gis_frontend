@@ -14,10 +14,11 @@ function GoogleMap (props) {
     selectedPlace: {},
   });
   const [locInfo, setLocInfo] = useState({
-    greenArea: 0,
-    numTrees: 0,
-    verticalDiversity: 0,
-    photoEntity: 0
+    photoId: '',
+    greenArea: 2,
+    numTrees: 3,
+    verticalDiversity: 4,
+    photoEntity: 5
   });
 
   useEffect(() => {
@@ -28,13 +29,7 @@ function GoogleMap (props) {
     setClickLatLng({lat: clickEvent.latLng.lat(), lng: clickEvent.latLng.lng()})
     console.log(`클릭한 위치의 위도: ${clickLatLng.lat}, 경도: ${clickLatLng.lng}`);
     setInfoState({selectedPlace: clickLatLng, showingInfoWindow: true});
-    const locInfo = getLocInfo();
-    setLocInfo({
-      greenArea: locInfo.green_area,
-      numTrees: locInfo.num_trees,
-      verticalDiversity: locInfo.vertical_diversity,
-      photoEntity: locInfo.entity_file
-    });
+    getLocInfo();
   };
 
   const onCloseInfoWindow = () => {
@@ -56,14 +51,33 @@ function GoogleMap (props) {
   };
 
   const getLocInfo = () => {
-    var temp = axios.get(`http://localhost:8080/photos/locInfo/${clickLatLng.lat}/${clickLatLng.lng}`)
+    var temp = axios.get(`http://localhost:8081/photos/locInfo/${clickLatLng.lat}/${clickLatLng.lng}`)
         .then((response) => {
             console.log('API Response Data:', response.data);
+            setLocInfo({
+              photoId: response.data.photoId,
+              greenArea: response.data.greenArea,
+              numTrees: response.data.numTrees,
+              verticalDiversity: response.data.verticalDiversity,
+            });
         })
         .catch((error) => {
             console.error('API Request Error:', error);
         });
 }
+
+  const getEntityImg = () => {
+    var temp = axios.get(`http://localhost:8081/photos/${locInfo.photoId}`)
+        .then((response) => {
+            setLocInfo({
+              photoEntity: response.data
+            });
+            return response.data;
+        })
+        .catch((error) => {
+            console.error('API Request Error:', error);
+        });
+  }
 
     return (
       <div className='GoogleMap-box'>
@@ -82,12 +96,16 @@ function GoogleMap (props) {
           onClose={onCloseInfoWindow}>
             <div>
               <h1>Location Info</h1>
-              <p>Latitude: {clickLatLng.lat}</p>
-              <p>Longitude: {clickLatLng.lng}</p>
-              <p>Green Area: {locInfo.greenArea}</p>
-              <p>Number of trees: {locInfo.numTrees}</p>
-              <p>Vertical Diversity: {locInfo.verticalDiversity}</p>
-              <p>Photo: {locInfo.entity_file}</p>
+                <p>Latitude: {clickLatLng.lat}</p>
+                <p>Longitude: {clickLatLng.lng}</p>
+              {locInfo.photoId && locInfo.photoId != 0 && (
+                <div>
+                  <p>Green Area: {locInfo.greenArea}</p>
+                  <p>Number of trees: {locInfo.numTrees}</p>
+                  <p>Vertical Diversity: {locInfo.verticalDiversity}</p>
+                  <p><img src={`http://localhost:8081/photos/${locInfo.photoId}`} alt="Image" /></p>
+                </div>
+              )}
             </div>
         </InfoWindow>
         </Map>

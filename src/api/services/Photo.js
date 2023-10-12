@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 function PhotoAPI () {
-  const BASE_URL = 'https://localhost:8080/photos';
+  const BASE_URL = 'https://localhost:8081/photos';
   const createMember = async () => {
     const response = await axios.post(BASE_URL);
     return response.data;

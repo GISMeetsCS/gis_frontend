@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 function MemberAPI () {
-  const BASE_URL = 'https://localhost:8080/members';
+  const BASE_URL = 'https://localhost:8081/members';
   const createMember = async () => {
     const response = await axios.post(BASE_URL);
     return response.data;

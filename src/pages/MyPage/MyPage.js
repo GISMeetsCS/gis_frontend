@@ -4,7 +4,7 @@ import MemberAPI from '../../api/services/MemberAPI';
 import axios from 'axios';
 
 function MyPage () {
-    const BASE_URL = 'https://localhost:8080/members';
+    const BASE_URL = 'https://localhost:8081/members';
     const [memberInfo, setMemberInfo] = useState([])
 
     const getMemberInfo = () => {
@@ -13,7 +13,7 @@ function MyPage () {
     };
 
     const findMemberById = async (memberId) => {
-        const response = await axios.get('http://localhost:8080/members?memberId=1');
+        const response = await axios.get('http://localhost:8081/members?memberId=1');
         return response.data;
       }
 

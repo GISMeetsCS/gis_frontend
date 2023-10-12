@@ -29,16 +29,6 @@ function Main () {
         console.log("get lat lng error");
     }
 
-   const getQuoteById = () => {
-        var temp = axios.get('https://localhost:8080/photo')
-            .then((response) => {
-                console.log('API Response Data:', response.data);
-            })
-            .catch((error) => {
-                console.error('API Request Error:', error);
-            });
-    }
-
     function getCurrentDateTime() {
         var currentDate = new Date();
         
@@ -77,7 +67,7 @@ function Main () {
         file.append('lon', lng);
         file.append('memberId', 1);
     
-        axios.post('http://localhost:8080/photos', file, {
+        axios.post('http://localhost:8081/photos', file, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
