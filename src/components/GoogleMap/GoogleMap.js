@@ -1,6 +1,6 @@
 import './GoogleMap.css';
 import React, { useEffect, useState } from 'react';
-import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Marker, InfoWindow, Circle } from 'google-maps-react';
 import { GOOGLEMAP_KEY } from '../../config';
 import axios from 'axios';
 
@@ -21,6 +21,18 @@ function GoogleMap (props) {
     verticalDiversity: '',
     photoEntity: ''
   });
+
+  const [circles, setCircles] = useState([]);
+  useEffect(() => {
+    axios.get(`http://localhost:8081/photos/location/list`)
+        .then((response) => {
+            console.log('location list:', response.data);
+            setCircles(response.data);
+        })
+        .catch((error) => {
+            console.error('API Request Error:', error);
+        });
+  }, []);
 
   useEffect(() => {
     if(clickLatLng.lat != 0 && clickLatLng.lng != 0){
@@ -74,26 +86,56 @@ function GoogleMap (props) {
           zoom={14}
           initialCenter={myLatlng}
           onClick={onMapClick} >
-            
-        <InfoWindow
-          marker={infoState.activeMarker}
-          visible={infoState.showingInfoWindow}
-          position={infoState.selectedPlace}
-          onClose={onCloseInfoWindow}>
-            <div>
-              <h1>Location Info</h1>
-                <p>Latitude: {clickLatLng.lat}</p>
-                <p>Longitude: {clickLatLng.lng}</p>
-              {locInfo.photoId && locInfo.photoId != 0 && (
-                <div>
-                  <p>Green Area: {locInfo.greenArea}</p>
-                  <p>Number of trees: {locInfo.numTrees}</p>
-                  <p>Vertical Diversity: {locInfo.verticalDiversity}</p>
-                  <p><img src={`http://localhost:8081/photos/${locInfo.photoId}`} alt="Image" /></p>
-                </div>
-              )}
-            </div>
-        </InfoWindow>
+
+        {circles.map((circle, index) => (
+          <Circle
+            center={{
+              lat: circle.lat,
+              lng: circle.lng,
+            }}
+            radius={9}
+            options={{
+              fillColor: 'rgba(0, 0, 255, 0.4)',
+              strokeColor: 'blue',
+              strokeWeight: 1,
+            }}
+          />
+        ))}
+
+        {circles.map((circle, index) => (
+          <Circle
+            center={{
+              lat: circle.lat,
+              lng: circle.lng,
+            }}
+            radius={30}
+            options={{
+              fillColor: 'rgba(0, 0, 255, 0.05)',
+              strokeColor: 'blue',
+              strokeWeight: 1,
+            }}
+          />
+        ))}
+
+          <InfoWindow
+            marker={infoState.activeMarker}
+            visible={infoState.showingInfoWindow}
+            position={infoState.selectedPlace}
+            onClose={onCloseInfoWindow}>
+              <div>
+                <h1>Location Info</h1>
+                  <p>Latitude: {clickLatLng.lat}</p>
+                  <p>Longitude: {clickLatLng.lng}</p>
+                {locInfo.photoId && locInfo.photoId != 0 && (
+                  <div>
+                    <p>Green Area: {locInfo.greenArea}</p>
+                    <p>Number of trees: {locInfo.numTrees}</p>
+                    <p>Vertical Diversity: {locInfo.verticalDiversity}</p>
+                    <p><img src={`http://localhost:8081/photos/${locInfo.photoId}`} alt="Image" /></p>
+                  </div>
+                )}
+              </div>
+          </InfoWindow>
         </Map>
       </div>
     );

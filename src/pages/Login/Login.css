@@ -34,3 +34,9 @@
 .Login-bottom-links {
     font-size: 15px;
 }
+
+.Login-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

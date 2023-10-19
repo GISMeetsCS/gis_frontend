@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Main.css';
 import GoogleMap from '../GoogleMap/GoogleMap';
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 
 function Main () {
     // ({ lat: 32.98587736174567, lng: -96.7502581329881 });
     const [currentLatlng, setCurrentLatlng] = useState({ lat: 0, lng: 0 });
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [modalMsg, setModalMsg] = useState('');
     
     useEffect(() => {
         if(currentLatlng.lat == 0 && currentLatlng.lng == 0)
@@ -77,10 +79,20 @@ function Main () {
             }
         })
             .then((response) => {
-                console.log('API Response Data:', response.data);
+                console.log('response.data:', response.data);
+                if(response.data){
+                    setModalMsg("Upload Success!");
+                    openModal();
+                }
+                else{
+                    setModalMsg("Upload Failed!");
+                    openModal();
+                }
             })
             .catch((error) => {
                 console.error('API Request Error:', error);
+                setModalMsg("Upload Failed!");
+                openModal();
             });
     };
 
@@ -91,9 +103,8 @@ function Main () {
     }
 
     const mainImgInput_onChange = (e) => {
-        setBinaryPhoto(e.target.files[0])
-        console.log("heyhey")
-        console.log(binaryPhoto)
+        setBinaryPhoto(e.target.files[0]);
+        console.log(binaryPhoto);
     }
 
     const [lat, setLat] = useState('');
@@ -108,6 +119,17 @@ function Main () {
         setLng(e.target.value)
     }
 
+    const openModal = () => {
+        setModalIsOpen(true);
+        console.log("openModal");
+      };
+    
+      const closeModal = () => {
+        setModalIsOpen(false);
+      };
+
+    const handleClose = () => setModalIsOpen(false);
+
     return (
         <div className='Main-box'>
             <div className="Main-main">
@@ -120,6 +142,17 @@ function Main () {
                 </label>
                 <input accept="image/*" type="file" onChange={mainImgInput_onChange} />
                 <Button onClick={uploadPhoto}>Upload</Button>
+                <Modal show={modalIsOpen} onHide={handleClose} size="sm" centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Upload</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {modalMsg}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={closeModal}>OK</Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
             <div className="Main-map">
                 <GoogleMap />

@@ -27,7 +27,9 @@ function Login () {
                 <a href='' onClick={goToRecovery}>Forgot login info?</a>
                 <input class="form-control" type="text" placeholder="Username or Email" aria-label="userid" />
                 <input class="form-control" type="text" placeholder="Password" aria-label="pw" />
-                <Button as="input" value="Login" onClick={goToMain} />
+                <div className='Login-btn'>
+                    <Button as="input" value="Login" onClick={goToMain} />
+                </div>
             </div>
             <div className='Login-bottom-links'>
                 <p>
