@@ -5,7 +5,6 @@ import { GOOGLEMAP_KEY } from '../../config';
 import axios from 'axios';
 
 function GoogleMap (props) {
-
   const [myLatlng, setMyLatlng] = useState({ lat: 32.98587736174567, lng: -96.7502581329881 });
   const [clickLatLng, setClickLatLng] = useState({ lat: 0, lng: 0 });
   const [infoState, setInfoState] = useState({
@@ -24,15 +23,19 @@ function GoogleMap (props) {
 
   const [circles, setCircles] = useState([]);
   useEffect(() => {
-    axios.get(`http://localhost:8081/photos/location/list`)
-        .then((response) => {
-            console.log('location list:', response.data);
-            setCircles(response.data);
-        })
-        .catch((error) => {
-            console.error('API Request Error:', error);
-        });
+    loadList();
   }, []);
+
+  const loadList = () => {
+    axios.get(`http://localhost:8081/photos/location/list`)
+    .then((response) => {
+        console.log('location list:', response.data);
+        setCircles(response.data);
+    })
+    .catch((error) => {
+        console.error('API Request Error:', error);
+    });
+  }
 
   useEffect(() => {
     if(clickLatLng.lat != 0 && clickLatLng.lng != 0){
@@ -99,6 +102,7 @@ function GoogleMap (props) {
               strokeColor: 'blue',
               strokeWeight: 1,
             }}
+            onClick={onMapClick}
           />
         ))}
 
@@ -114,6 +118,7 @@ function GoogleMap (props) {
               strokeColor: 'blue',
               strokeWeight: 1,
             }}
+            onClick={onMapClick}
           />
         ))}
 

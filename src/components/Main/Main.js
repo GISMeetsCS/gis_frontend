@@ -122,11 +122,12 @@ function Main () {
     const openModal = () => {
         setModalIsOpen(true);
         console.log("openModal");
-      };
+    };
     
-      const closeModal = () => {
+    const closeModal = () => {
         setModalIsOpen(false);
-      };
+        window.location.reload();
+    };
 
     const handleClose = () => setModalIsOpen(false);
 
